@@ -1,73 +1,100 @@
-# spfx-bbc-news
+# BBC-Style SharePoint News Webpart  
+**Built collaboratively with ChatGPT-5 + SPFx + PnPjs + Tailwind**
 
-## Summary
-
-Short summary on functionality and used technologies.
-
-[picture of the solution in action, if possible]
-
-## Used SharePoint Framework Version
-
-![version](https://img.shields.io/badge/version-1.20.0-green.svg)
-
-## Applies to
-
-- [SharePoint Framework](https://aka.ms/spfx)
-- [Microsoft 365 tenant](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/set-up-your-developer-tenant)
-
-> Get your own free development tenant by subscribing to [Microsoft 365 developer program](http://aka.ms/o365devprogram)
-
-## Prerequisites
-
-> Any special pre-requisites?
-
-## Solution
-
-| Solution    | Author(s)                                               |
-| ----------- | ------------------------------------------------------- |
-| folder name | Author details (name, company, twitter alias with link) |
-
-## Version history
-
-| Version | Date             | Comments        |
-| ------- | ---------------- | --------------- |
-| 1.1     | March 10, 2021   | Update comment  |
-| 1.0     | January 29, 2021 | Initial release |
-
-## Disclaimer
-
-**THIS CODE IS PROVIDED _AS IS_ WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.**
+This project explores what happens when an experienced SharePoint developer partners with AI to build a complete, production-ready SPFx component.  
+The goal: recreate a **BBC-style news layout** — accessible, dynamic, and editable — entirely through AI-assisted development.
 
 ---
 
-## Minimal Path to Awesome
+## 🧠 Summary
 
-- Clone this repository
-- Ensure that you are at the solution folder
-- in the command-line run:
-  - **npm install**
-  - **gulp serve**
+By the final count, the build involved **~63 user prompts** and **~63 assistant replies** — about **130 messages in total**.  
+Each iteration refined functionality, accessibility, and maintainability until we had a fully working, installable SPFx webpart.
 
-> Include any additional steps as needed.
+---
 
-## Features
+## 🔧 Main areas we covered
 
-Description of the extension that expands upon high-level summary above.
+### 🧩 SPFx + PnPjs Wiring
+- Correct `spfi().using(SPFx(...))` setup  
+- Batched list queries via `sp.web.batched()`  
+- Filter logic: `PromotedState = 2` (published news)  
+- Fixed type errors, `ISPQueryable` mismatches, and `sp.web` injection  
 
-This extension illustrates the following concepts:
+### ⚙️ Build & Runtime Fixes
+- Tailwind added via CDN with generated local CSS artifact  
+- `domElement` undefined fixes and lifecycle guards  
+- Proper module export alignment across components  
 
-- topic 1
-- topic 2
-- topic 3
+### 📰 Card Layout & Styling
+- Fixed card heights and non-Tailwind line clamping (2-line title, 3-line summary)  
+- Gentle hover animation, image helpers for thumbnails  
+- BBC-style hero compositions with row fallbacks  
 
-> Notice that better pictures and documentation will increase the sample usage and the value you are providing for others. Thanks for your submissions advance.
+### 🎨 Visual Hero Polish
+- Continuous gradient overlay across hero band  
+- BBC-style tint/vignette fade mask  
+- Padding, spacing, and alignment tuned to match BBC’s visual rhythm  
+- Theme variable integration for dark/light consistency  
 
-> Share your web part with others through Microsoft 365 Patterns and Practices program to get visibility and exposure. More details on the community, open-source projects and other activities from http://aka.ms/m365pnp.
+### ♿ Accessibility (WCAG 2.2 AA)
+- Contrast and focus ring compliance  
+- ≥24 px interactive targets  
+- Full keyboard navigation  
+- Screen reader live regions for updates  
+- Reduced-motion mode  
+- Accessible per-article slideshow support  
 
-## References
+### 🧭 Curation UX (Edit Mode)
+- Drag-and-drop ordering of selected articles  
+- Add/remove with de-duplication logic  
+- Batched title lookups for performance  
+- Collapsible sections  
+- Max-items cap (20) with visible counter + SR live region  
 
-- [Getting started with SharePoint Framework](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/set-up-your-developer-tenant)
-- [Building for Microsoft teams](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/build-for-teams-overview)
-- [Use Microsoft Graph in your solution](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/web-parts/get-started/using-microsoft-graph-apis)
-- [Publish SharePoint Framework applications to the Marketplace](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/publish-to-marketplace-overview)
-- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp) - Guidance, tooling, samples and open-source controls for your Microsoft 365 development
+### 🧰 Toolbar & Settings
+- In-webpart “Design Toolbar” (layout picker + open Property Pane)  
+- `@pnp/spfx-controls-react` WebPartTitle with inline editing  
+- Proper property-pane wiring and persistence  
+
+### 🪶 Adaptive Cards Layout
+- AdaptiveCardHost grid layout variant  
+- Fixed height, 2-line title + description clamp  
+- Dark overlay with white text for accessibility  
+- Full-card click action + keyboard activation  
+
+---
+
+## 🧩 What you get
+
+A **ready-to-use SPFx News Webpart** you can drop into your SharePoint tenant.
+
+**In edit mode:**  
+Select up to **20 news posts**, reorder them, and preview instantly.  
+
+**In view mode:**  
+Renders a **BBC-style accessible newsfeed**:
+- 5-item Hero strip  
+- 2 rows of 5 compact cards  
+- 5-item Hero strip  
+
+Fully responsive, keyboard-navigable, and WCAG 2.2 AA-aligned.
+
+---
+
+## 🚀 Installation
+
+### Option 1 – Non-developers  
+1. Download the latest `.sppkg` from [Releases](./releases).  
+2. Upload to your SharePoint **App Catalog**.  
+3. Add the **BBC News Webpart** to a modern page.  
+
+Done ✅
+
+### Option 2 – Developers  
+
+```bash
+git clone https://github.com/YOUR-USERNAME/bbc-sharepoint-news-webpart.git
+cd bbc-sharepoint-news-webpart
+npm install
+gulp serve
