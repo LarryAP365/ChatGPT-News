@@ -1,0 +1,19 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "bbc-news-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/bbcNews/BbcNewsWebPart.js",
+          "manifest": "./src/webparts/bbcNews/BbcNewsWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "BbcNewsWebPartStrings": "lib/webparts/bbcNews/loc/{locale}.js",
+    "ControlStrings": "node_modules/@pnp/spfx-controls-react/lib/loc/{locale}.js"
+  }
+}

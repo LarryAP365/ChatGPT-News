@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "spfx-bbc-news-client-side-solution",
+    "id": "836a1edb-0f0a-4681-a552-66c22997ef6e",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "developer": {
+      "name": "",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.20.0"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "spfx-bbc-news description"
+      },
+      "longDescription": {
+        "default": "spfx-bbc-news description"
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    },
+    "features": [
+      {
+        "title": "spfx-bbc-news Feature",
+        "description": "The feature that activates elements of the spfx-bbc-news solution.",
+        "id": "cbeb967d-0baf-4e7c-ba34-c4e1ac32ef50",
+        "version": "1.0.0.0"
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/spfx-bbc-news.sppkg"
+  }
+}

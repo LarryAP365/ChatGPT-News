@@ -1,0 +1,21 @@
+{
+  "@microsoft/generator-sharepoint": {
+    "plusBeta": false,
+    "isCreatingSolution": true,
+    "nodeVersion": "18.20.6",
+    "sdksVersions": {
+      "@microsoft/microsoft-graph-client": "3.0.2",
+      "@microsoft/teams-js": "2.24.0"
+    },
+    "version": "1.20.0",
+    "libraryName": "spfx-bbc-news",
+    "libraryId": "836a1edb-0f0a-4681-a552-66c22997ef6e",
+    "environment": "spo",
+    "packageManager": "npm",
+    "solutionName": "spfx-bbc-news",
+    "solutionShortDescription": "spfx-bbc-news description",
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "componentType": "webpart"
+  }
+}

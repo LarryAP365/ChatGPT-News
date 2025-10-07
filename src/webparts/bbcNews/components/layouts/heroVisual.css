@@ -1,0 +1,341 @@
+/* ===========================
+   Visual Hero (full stylesheet)
+   =========================== */
+
+/* Wrapper hosts a single gradient slab spanning the hero + overlap area */
+.hv-wrap {
+  position: relative;
+  display: grid;
+  gap: 28px;
+
+  /* Tunables (override via inline style on .hv-wrap if needed) */
+  --hero-h: 520px;        /* height of the visual hero */
+  --overlap-h: 148px;     /* gradient continuation under the card row */
+
+  /* Image effects (can be overridden inline) */
+  --image-tint-a: 0.24;       /* theme tint strength over the image */
+  --image-vignette-a: 0.32;   /* vignette strength at edges */
+}
+
+/* One continuous gradient slab (does not restart) */
+.hv-wrap::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: calc(var(--hero-h) + var(--overlap-h));
+  z-index: 0;
+  border-radius: 16px;
+
+  /* fallback + modern gradient using theme vars provided from TSX */
+  background-color: rgba(var(--theme-r), var(--theme-g), var(--theme-b), 1);
+  background-image: linear-gradient(
+    120deg,
+    rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.95) 0%,
+    rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.82) 45%,
+    rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.64) 100%
+  );
+  background-image: linear-gradient(
+    120deg,
+    rgb(var(--theme-rgb) / 0.95) 0%,
+    rgb(var(--theme-rgb) / 0.82) 45%,
+    rgb(var(--theme-rgb) / 0.64) 100%
+  );
+}
+
+/* ----------------
+   Hero banner area
+   ---------------- */
+.hv-hero {
+  position: relative;
+  z-index: 1;                   /* sits above the gradient slab */
+  height: var(--hero-h);
+  border-radius: 16px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* No extra background here—we use the slab */
+.hv-bg { position: absolute; inset: 0; background: transparent; }
+
+/* Subtle light overlays for depth */
+.hv-hero::after {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background:
+    radial-gradient(60% 60% at 80% 20%, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 60%) no-repeat,
+    radial-gradient(50% 50% at 10% 90%, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 55%) no-repeat;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+.hv-content {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 24px;
+  padding: 32px 32px 72px; /* extra ~40px bottom breathing room */
+}
+
+/* Left column text with auto contrast colors from vars */
+.hv-left {
+  color: var(--on-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.hv-kicker {
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: .06em;
+  color: var(--on-muted);
+  font-size: .85rem;
+}
+.hv-title {
+  margin: 8px 0 6px;
+  font-weight: 800;
+  font-size: clamp(1.75rem, 2.8vw, 2.75rem);
+  line-height: 1.1;
+  color: var(--on-color);
+}
+.hv-desc {
+  margin: 8px 0 16px;
+  font-size: 1rem;
+  max-width: 58ch;
+  color: var(--on-muted);
+}
+.hv-meta {
+  font-size: .9rem;
+  color: var(--on-muted);
+  margin-bottom: 18px;
+}
+
+/* CTA */
+.hv-cta {
+  align-self: flex-start;
+  display: inline-block;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: color-mix(in oklab, var(--on-color) 12%, transparent);
+  color: var(--on-color);
+  text-decoration: none;
+  border: 1px solid color-mix(in oklab, var(--on-color) 22%, transparent);
+  transition: background 140ms ease, transform 140ms ease, box-shadow 140ms ease;
+}
+.hv-cta:hover { background: color-mix(in oklab, var(--on-color) 18%, transparent); transform: translateY(-1px); }
+.hv-cta:focus-visible { outline: 3px solid var(--on-color); outline-offset: 3px; box-shadow: 0 0 0 3px rgba(0,0,0,0.20); }
+@supports not (color: color-mix(in oklab, white 50%, black)) {
+  .hv-cta { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.25); }
+}
+
+/* Right artwork with theme tint + edge vignette */
+.hv-right {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 12px;
+}
+.hv-art { width: 100%; height: 100%; object-fit: contain; }
+.hv-art--ph { background: rgba(0,0,0,0.15); }
+
+.hv-right::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    135deg,
+    rgb(var(--theme-rgb) / var(--image-tint-a)) 0%,
+    rgb(var(--theme-rgb) / 0.16) 35%,
+    rgb(var(--theme-rgb) / 0.08) 65%,
+    transparent 95%
+  );
+  mix-blend-mode: soft-light;
+}
+.hv-right::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  pointer-events: none;
+  background: radial-gradient(
+    120% 100% at 50% 50%,
+    transparent 58%,
+    rgb(var(--theme-rgb) / var(--image-vignette-a)) 100%
+  );
+  mix-blend-mode: multiply;
+}
+
+/* ---------------------------
+   Overlapping “More news” row
+   --------------------------- */
+.hv-more {
+  position: relative;
+  z-index: 1; /* above the slab */
+  display: grid;
+  gap: 12px;
+}
+.hv-more--overlay { margin-top: -84px; color: var(--on-color); }
+
+.hv-more-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 0 6px;
+  color: var(--on-color);
+  padding-inline: 20px; /* align with row cards */
+}
+
+/* White card tray sitting on the gradient slab */
+.hv-row {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+ 
+  
+  border-radius: 16px;
+  padding-block: 12px;
+  padding-inline: 20px;                /* symmetric left/right */
+
+  
+}
+
+/* ----------------
+   Responsive tweaks
+   ---------------- */
+@media (max-width: 980px) {
+  .hv-content { grid-template-columns: 1fr; padding: 20px; }
+  .hv-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hv-more--overlay { margin-top: 12px; } /* remove overlap on small screens */
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .hv-cta { transition: none; }
+}
+/* --- BBC-style bottom fade on the main hero image --- */
+/* Works in Chrome/Edge/Firefox/Safari */
+.hv-art {
+  /* If you were using contain/cover, keep whatever you want here */
+  object-fit: contain;
+
+  /* Size & repeat for the mask */
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+border-radius:9px;
+  /* Cross-browser: fade from fully visible (top) to transparent (bottom) */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, .99) 7%,
+    rgba(0, 0, 0, .98) 13%,
+    rgba(0, 0, 0, .97) 19%,
+    rgba(0, 0, 0, .96) 24%,
+    rgba(0, 0, 0, .95) 29%,
+    rgba(0, 0, 0, .93) 34%,
+    rgba(0, 0, 0, .91) 39%,
+    rgba(0, 0, 0, .89) 43%,
+    rgba(0, 0, 0, .87) 47%,
+    rgba(0, 0, 0, .84) 51%,
+    rgba(0, 0, 0, .82) 55%,
+    rgba(0, 0, 0, .78) 59%,
+    rgba(0, 0, 0, .75) 62%,
+    rgba(0, 0, 0, .70) 65%,
+    rgba(0, 0, 0, .65) 69%,
+    rgba(0, 0, 0, .61) 72%,
+    rgba(0, 0, 0, .55) 75%,
+    rgba(0, 0, 0, .49) 79%,
+    rgba(0, 0, 0, .42) 82%,
+    rgba(0, 0, 0, .35) 85%,
+    rgba(0, 0, 0, .27) 89%,
+    rgba(0, 0, 0, .19) 92%,
+    rgba(0, 0, 0, .10) 96%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, .99) 7%,
+    rgba(0, 0, 0, .98) 13%,
+    rgba(0, 0, 0, .97) 19%,
+    rgba(0, 0, 0, .96) 24%,
+    rgba(0, 0, 0, .95) 29%,
+    rgba(0, 0, 0, .93) 34%,
+    rgba(0, 0, 0, .91) 39%,
+    rgba(0, 0, 0, .89) 43%,
+    rgba(0, 0, 0, .87) 47%,
+    rgba(0, 0, 0, .84) 51%,
+    rgba(0, 0, 0, .82) 55%,
+    rgba(0, 0, 0, .78) 59%,
+    rgba(0, 0, 0, .75) 62%,
+    rgba(0, 0, 0, .70) 65%,
+    rgba(0, 0, 0, .65) 69%,
+    rgba(0, 0, 0, .61) 72%,
+    rgba(0, 0, 0, .55) 75%,
+    rgba(0, 0, 0, .49) 79%,
+    rgba(0, 0, 0, .42) 82%,
+    rgba(0, 0, 0, .35) 85%,
+    rgba(0, 0, 0, .27) 89%,
+    rgba(0, 0, 0, .19) 92%,
+    rgba(0, 0, 0, .10) 96%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+/* If you previously used a vignette overlay, turn it off to avoid doubling effects */
+.hv-right::before { content: none !important; }
+.hv-cta{
+  align-self:flex-start;
+  display:inline-block;
+  padding:10px 14px;
+  border-radius:10px;
+  color:var(--on-color);
+  background: color-mix(in oklab, currentColor 12%, transparent);
+  border:1px solid color-mix(in oklab, currentColor 28%, transparent);
+  box-shadow: 0 1px 2px rgba(0,0,0,.06);
+  transition: background-color 150ms ease, border-color 150ms ease,
+              box-shadow 150ms ease, transform 80ms ease;
+}
+
+/* Hover – slightly brighter, subtle lift */
+.hv-cta:hover{
+  background: color-mix(in oklab, currentColor 18%, transparent);
+  border-color: color-mix(in oklab, currentColor 36%, transparent);
+  box-shadow: 0 4px 12px rgba(0,0,0,.12);
+  transform: translateY(-1px);
+}
+
+/* Active – pressed */
+.hv-cta:active{
+  background: color-mix(in oklab, currentColor 22%, transparent);
+  border-color: color-mix(in oklab, currentColor 42%, transparent);
+  box-shadow: 0 1px 2px rgba(0,0,0,.06) inset;
+  transform: translateY(0);
+}
+
+/* Focus – clear ring using the on-color */
+.hv-cta:focus-visible{
+  outline: 3px solid currentColor;
+  outline-offset: 3px;
+}
+
+/* Fallback if color-mix isn't supported */
+@supports not (color: color-mix(in oklab, white 50%, black)){
+  .hv-cta{
+    background: rgb(var(--on-rgb, 255 255 255) / .12);
+    border-color: rgb(var(--on-rgb, 255 255 255) / .28);
+  }
+  .hv-cta:hover{
+    background: rgb(var(--on-rgb, 255 255 255) / .18);
+    border-color: rgb(var(--on-rgb, 255 255 255) / .36);
+    box-shadow: 0 4px 12px rgba(0,0,0,.12);
+  }
+  .hv-cta:active{
+    background: rgb(var(--on-rgb, 255 255 255) / .22);
+    border-color: rgb(var(--on-rgb, 255 255 255) / .42);
+  }
+}

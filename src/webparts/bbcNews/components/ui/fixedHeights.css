@@ -1,0 +1,191 @@
+/* ---- CARD FRAME ---- */
+.bbc-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  background: #fff;
+  overflow: hidden;
+  transition: box-shadow 140ms ease, transform 140ms ease, border-color 140ms ease;
+}
+
+/* softer: tiny lift, subtle shadow, gentler border change */
+.bbc-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  border-color: #e9e9ee;
+}
+
+/* keep focus visible but a touch softer */
+.bbc-card:focus-within {
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.12);
+  border-color: #dfe1e6;
+}
+
+/* ---- IMAGE ---- */
+.bbc-img-wrap {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  overflow: hidden;
+  background: #e5e5e5;
+}
+.bbc-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 180ms ease;
+}
+
+/* only apply a micro-zoom on devices that actually hover (not touch) */
+@media (any-hover: hover) and (pointer: fine) {
+  .bbc-card:hover .bbc-img { transform: scale(1.005); }
+}
+
+/* ---- BODY ---- */
+.bbc-card-body { padding: 12px; display: flex; flex-direction: column; flex: 1; }
+
+/* Title: exactly 2 lines */
+.bbc-title {
+  margin: 0;
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.25 !important;
+  height: calc(2 * 1.25em);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+.bbc-link { text-decoration: none; color: inherit; }
+.bbc-card:hover .bbc-title { text-decoration: underline; }
+
+/* Summary: exactly 3 lines */
+.bbc-desc {
+  margin: 6px 0 0 0;
+  font-size: .92rem;
+  line-height: 1.35;
+  height: calc(3 * 1.35em);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+/* Meta pinned to bottom */
+.bbc-meta { margin-top: auto; font-size: 12px; opacity: .7; }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .bbc-card, .bbc-img { transition: none !important; transform: none !important; }
+}
+/* ---- CARD FRAME ---- */
+.bbc-card {
+  position: relative; /* for stretched link focus ring */
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  background: #fff;
+  overflow: hidden;
+  transition: box-shadow 140ms ease, transform 140ms ease, border-color 140ms ease;
+}
+
+.bbc-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  border-color: #e9e9ee;
+}
+
+/* Strong, AA-friendly focus (2.4.11 Focus Appearance Minimum) */
+.bbc-card:focus-within {
+  outline: 2px solid #0f6cbd;           /* contrast ≳ 3:1 on white */
+  outline-offset: 2px;
+}
+
+/* ---- STRETCHED LINK (single tabbable element) ---- */
+.bbc-stretch {
+  position: absolute;
+  inset: 0;                              /* makes the whole card clickable */
+  z-index: 1;
+  text-decoration: none;
+  color: inherit;
+}
+/* Visible focus on the stretched link too */
+.bbc-stretch:focus-visible {
+  outline: none;                         /* rely on .bbc-card:focus-within */
+}
+
+/* ---- IMAGE ---- */
+.bbc-img-wrap {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  overflow: hidden;
+  background: #e5e5e5;
+}
+.bbc-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 180ms ease;
+}
+@media (any-hover: hover) and (pointer: fine) {
+  .bbc-card:hover .bbc-img { transform: scale(1.005); }
+}
+
+/* ---- BODY ---- */
+.bbc-card-body { padding: 12px; display: flex; flex-direction: column; flex: 1; }
+
+/* Title: exactly 2 lines */
+.bbc-title {
+  margin: 0 0 0 0;
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.25 !important;
+  height: calc(2 * 1.25em);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+/* Summary: exactly 3 lines */
+.bbc-desc {
+  margin: 6px 0 0 0;
+  font-size: .92rem;
+  line-height: 1.35;
+  height: calc(3 * 1.35em);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+/* Meta pinned to bottom */
+.bbc-meta { margin-top: auto; font-size: 12px; opacity: .7; }
+
+/* Buttons: meet 24x24 target size (2.5.8) */
+.bbc-btn {
+  min-width: 24px;
+  min-height: 24px;
+  padding: 4px 8px;
+  border: 1px solid #d7dbe0;
+  border-radius: 8px;
+  background: #fff;
+}
+.bbc-btn:focus-visible {
+  outline: 2px solid #0f6cbd;
+  outline-offset: 2px;
+}
+
+/* Screen-reader only helper (for DnD instructions, live region, etc.) */
+.bbc-sr-only {
+  position: absolute !important; width:1px; height:1px;
+  padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .bbc-card, .bbc-img { transition: none !important; transform: none !important; }
+}
