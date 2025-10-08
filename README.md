@@ -12,6 +12,7 @@ By the final count, the build involved **~63 user prompts** and **~63 assistant 
 Each iteration refined functionality, accessibility, and maintainability until we had a fully working, installable SPFx webpart.
 
 ---
+![ChatGPTNews](https://github.com/user-attachments/assets/4232c637-a0a6-46e8-a82a-978a02c9ce96)
 
 ## 🔧 Main areas we covered
 
